@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>전도폭발 대상자 기도제목</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;600&display=swap');
+
+  :root {
+    --primary: #1a3a5c;
+    --accent: #c8860a;
+    --light: #f5f0e8;
+    --white: #ffffff;
+    --border: #d4c9b0;
+    --text: #2c2c2c;
+    --muted: #7a7060;
+    --error: #c0392b;
+    --success: #1e6b3c;
+    --shadow: 0 2px 16px rgba(26,58,92,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #eae4d8;
+    min-height: 100vh;
+    padding: 0 0 60px 0;
+  }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── Header ── */
+  .header {
+    background: var(--primary);
+    color: var(--white);
+    padding: 22px 20px 18px;
+    text-align: center;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,.25);
+  }
+  .header h1 {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    opacity: 0.82;
+  }
+  .header p {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.18rem;
+    font-weight: 600;
+    opacity: 1;
+    margin-top: 4px;
+    letter-spacing: 0.03em;
+  }
+  .header .verse {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.35);
+    font-size: 0.72rem;
+    line-height: 1.9;
+    opacity: 0.85;
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    text-align: left;
+  }
+  .header .verse-ref {
+    display: block;
+    text-align: right;
+    font-size: 0.68rem;
+    opacity: 0.7;
+    margin-top: 4px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── Card ── */
+  .card {
+    background: var(--white);
+    margin: 18px 14px 0;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 20px 18px;
+  }
+
+  .section-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    padding-bottom: 7px;
+    border-bottom: 1.5px solid var(--border);
+  }
+
+  /* ── Field ── */
+  .field { margin-bottom: 16px; }
+  .field label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 6px;
+  }
+  .field label .req { color: var(--accent); margin-left: 2px; }
+
+  .field input[type=text],
+  .field input[type=number],
+  .field textarea,
+  .field select {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.92rem;
+    color: var(--text);
+    background: var(--light);
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    appearance: none;
+  }
+  .field input:focus,
+  .field textarea:focus,
+  .field select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(26,58,92,.08);
+    background: var(--white);
+  }
+  .field textarea { resize: vertical; line-height: 1.6; }
+  .field .hint {
+    font-size: 0.68rem;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* ── Age row ── */
+  .age-row { display: flex; gap: 8px; align-items: center; }
+  .age-row input[type=number] { width: 80px; flex-shrink: 0; }
+  .age-row .seg { display: flex; border: 1.5px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .age-row .seg label {
+    margin: 0;
+    padding: 10px 16px;
+    font-size: 0.86rem;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    background: var(--light);
+    transition: background .15s, color .15s;
+    user-select: none;
+  }
+  .age-row .seg input[type=radio] { display: none; }
+  .age-row .seg input[type=radio]:checked + label {
+    background: var(--primary);
+    color: var(--white);
+  }
+  .seg-divider { width: 1px; background: var(--border); }
+
+  /* ── Contact ── */
+  .contact-row { display: flex; align-items: center; gap: 6px; }
+  .contact-prefix {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary);
+    white-space: nowrap;
+    padding: 10px 0;
+  }
+  .contact-row input { flex: 1; }
+
+  /* ── Date row ── */
+  .date-row { display: flex; align-items: center; gap: 8px; }
+  .date-prefix {
+    font-size: 0.9rem;
+    color: var(--primary);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .date-row input[type=number] { width: 72px; }
+  .date-suffix {
+    font-size: 0.9rem;
+    color: var(--primary);
+    font-weight: 600;
+  }
+  .day-badge {
+    background: var(--primary);
+    color: var(--white);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: none;
+  }
+  .day-badge.show { display: inline-block; }
+
+  /* ── Prayer fields ── */
+  .prayer-group { display: flex; flex-direction: column; gap: 8px; }
+  .prayer-item { display: flex; align-items: center; gap: 8px; }
+  .prayer-num {
+    width: 22px; height: 22px;
+    background: var(--primary);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .prayer-item input { flex: 1; }
+
+  /* ── Submit btn ── */
+  .btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity .2s, transform .1s;
+    letter-spacing: 0.04em;
+  }
+  .btn:active { transform: scale(.98); }
+  .btn-primary { background: var(--primary); color: var(--white); }
+  .btn-accent { background: var(--accent); color: var(--white); }
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+  }
+  .btn-sm { padding: 9px 18px; font-size: 0.84rem; width: auto; }
+  .btn-row { display: flex; gap: 10px; margin-top: 6px; }
+  .btn-row .btn { flex: 1; }
+
+  /* ── Alert / Modal ── */
+  .overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.55);
+    z-index: 200;
+    align-items: flex-end;
+  }
+  .overlay.show { display: flex; }
+  .modal {
+    background: var(--white);
+    width: 100%;
+    border-radius: 18px 18px 0 0;
+    padding: 28px 20px 36px;
+    animation: slideUp .25s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(60px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .modal h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.05rem;
+    color: var(--primary);
+    margin-bottom: 10px;
+  }
+  .modal p { font-size: 0.85rem; color: var(--text); line-height: 1.7; margin-bottom: 16px; }
+  .modal .dup-info {
+    background: var(--light);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 0.8rem;
+    color: var(--text);
+    margin-bottom: 16px;
+    line-height: 1.8;
+  }
+
+  /* ── Toast ── */
+  .toast {
+    position: fixed; bottom: 80px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--primary);
+    color: var(--white);
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-size: 0.83rem;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity .3s, transform .3s;
+    z-index: 999;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ── Nav tabs ── */
+  .nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    display: flex;
+    z-index: 100;
+    box-shadow: 0 -2px 10px rgba(0,0,0,.08);
+  }
+  .nav-btn {
+    flex: 1;
+    padding: 10px 4px 8px;
+    background: none;
+    border: none;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.7rem;
+    color: var(--muted);
+    cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    transition: color .2s;
+  }
+  .nav-btn.active { color: var(--primary); }
+  .nav-btn svg { width: 22px; height: 22px; }
+  .nav-btn span { font-weight: 500; }
+
+  /* ── Admin page ── */
+  .admin-header {
+    padding: 14px 14px 6px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .admin-header label { font-size: 0.8rem; font-weight: 600; color: var(--primary); }
+  .admin-header select {
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 0.85rem;
+    background: var(--white);
+    color: var(--text);
+    outline: none;
+  }
+
+  .prayer-card {
+    background: var(--white);
+    margin: 10px 14px 0;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 18px 16px;
+  }
+  .prayer-card .trainer-line {
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .prayer-card .pc-row {
+    font-size: 0.86rem;
+    color: var(--text);
+    line-height: 1.9;
+  }
+  .prayer-card .pc-row b { color: var(--primary); font-weight: 600; }
+  .prayer-card .pc-label { color: var(--muted); font-size: 0.78rem; }
+  .prayer-card .pc-bg {
+    background: var(--light);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 0.83rem;
+    line-height: 1.7;
+    margin: 6px 0 4px;
+    white-space: pre-wrap;
+  }
+  .prayer-card .pc-prayers { margin-top: 6px; }
+  .prayer-card .pc-pi {
+    display: flex; gap: 8px; align-items: flex-start;
+    font-size: 0.83rem; line-height: 1.6; margin-bottom: 2px;
+  }
+  .prayer-card .pc-pi .pn {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--accent); color: var(--white);
+    font-size: 0.68rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  /* ── Success page ── */
+  .success-wrap {
+    text-align: center;
+    padding: 60px 30px;
+  }
+  .success-icon {
+    width: 72px; height: 72px;
+    background: var(--primary);
+    border-radius: 50%;
+    margin: 0 auto 24px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .success-icon svg { width: 36px; height: 36px; color: white; }
+  .success-wrap h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.3rem;
+    color: var(--primary);
+    margin-bottom: 10px;
+  }
+  .success-wrap p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+
+  /* ── Config banner ── */
+  .config-banner {
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    color: #856404;
+    margin: 12px 14px 0;
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<!-- ───────── CONFIG ───────── -->
+<script>
+  // !! 여기에 Apps Script 배포 URL을 붙여넣으세요 !!
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4vf15qFT65dvvMllWmc1H9fRbC9GtLd8mAlwILbdWZQHf3I0ce8Vn4eGaPijeWWZ6Cg/exec';
+  const YEAR = 2025;
+  const MONTH = 6;
+  const DAYS_KO = ['일','월','화','수','목','금','토'];
+</script>
+
+<!-- ───────── PAGE: FORM ───────── -->
+<div id="page-form" class="page active">
+  <div class="header">
+    <h1>전도폭발 349회 JustEE 임상훈련 — 지구촌교회</h1>
+    <p>대상자 기도제목</p>
+    <div class="verse">
+      주여 이제도 그들의 위협함을 굽어보시옵고 또 종들로 하여금 담대히 하나님의 말씀을 전하게 하여 주시오며<br>
+      손을 내밀어 병을 낫게 하시옵고 표적과 기사가 거룩한 종 예수의 이름으로 이루어지게 하옵소서 하더라<br>
+      빌기를 다하매 모인 곳이 진동하더니 무리가 다 성령이 충만하여 담대히 하나님의 말씀을 전하니라
+      <span class="verse-ref">— 행 4:29–31</span>
+    </div>
+  </div>
+
+  <div id="config-warn" class="config-banner" style="display:none">
+    ⚠️ <span>Apps Script URL이 설정되지 않았습니다. 상단 &lt;script&gt; 블록의 <b>SCRIPT_URL</b>을 교체해주세요.</span>
+  </div>
+
+  <div class="card">
+    <div class="section-title">훈련자 정보</div>
+    <div class="field">
+      <label>훈련자 이름 <span class="req">*</span></label>
+      <input type="text" id="trainer" placeholder="이름 입력">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">대상자 정보</div>
+
+    <div class="field">
+      <label>대상자 이름 <span class="req">*</span></label>
+      <input type="text" id="targetName" placeholder="이름 입력">
+    </div>
+
+    <div class="field">
+      <label>나이 <span class="req">*</span></label>
+      <div class="age-row">
+        <input type="number" id="ageNum" placeholder="숫자" min="1" max="120">
+        <div class="seg">
+          <input type="radio" name="ageUnit" id="unitSe" value="세" checked>
+          <label for="unitSe">세</label>
+          <div class="seg-divider"></div>
+          <input type="radio" name="ageUnit" id="unitDae" value="대">
+          <label for="unitDae">대</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>연락처</label>
+      <div class="contact-row">
+        <span class="contact-prefix">010 –</span>
+        <input type="text" id="contact" placeholder="12345678" maxlength="8" inputmode="numeric">
+      </div>
+      <div class="hint">숫자 8자리만 입력 → 010-NNNN-NNNN 자동 변환</div>
+    </div>
+
+    <div class="field">
+      <label>복음제시일 <span class="req">*</span></label>
+      <div class="date-row">
+        <span class="date-prefix">6월</span>
+        <input type="number" id="dateDay" placeholder="일" min="1" max="30" inputmode="numeric">
+        <span class="date-suffix">일</span>
+        <span id="dayBadge" class="day-badge"></span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>관계</label>
+      <input type="text" id="relation" placeholder="예: 직장 동료, 이웃">
+    </div>
+
+    <div class="field">
+      <label>종교</label>
+      <input type="text" id="religion" placeholder="예: 무교, 불교">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">복음을 전하게 된 배경</div>
+    <div class="field">
+      <textarea id="background" rows="4" placeholder="배경을 자유롭게 입력해주세요"></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-title">현장을 위한 기도제목</div>
+    <div class="prayer-group">
+      <div class="prayer-item">
+        <div class="prayer-num">1</div>
+        <input type="text" id="prayer1" placeholder="기도제목 1">
+      </div>
+      <div class="prayer-item">
+        <div class="prayer-num">2</div>
+        <input type="text" id="prayer2" placeholder="기도제목 2">
+      </div>
+      <div class="prayer-item">
+        <div class="prayer-num">3</div>
+        <input type="text" id="prayer3" placeholder="기도제목 3">
+      </div>
+    </div>
+  </div>
+
+  <div style="padding: 20px 14px 0">
+    <button class="btn btn-primary" onclick="handleSubmit()">기도제목 제출하기</button>
+  </div>
+</div>
+
+<!-- ───────── PAGE: ADMIN ───────── -->
+<div id="page-admin" class="page">
+  <div class="header">
+    <h1>관리자 페이지</h1>
+    <p>복음제시일별 기도제목 조회</p>
+  </div>
+
+  <div class="admin-header">
+    <label>날짜 선택</label>
+    <select id="dateFilter" onchange="filterAdmin()">
+      <option value="">전체 보기</option>
+    </select>
+    <button class="btn btn-outline btn-sm" onclick="loadAdmin()" style="margin-left:auto">새로고침</button>
+  </div>
+
+  <div id="admin-content"><div class="loading">불러오는 중...</div></div>
+</div>
+
+<!-- ───────── NAV ───────── -->
+<nav class="nav">
+  <button class="nav-btn active" id="nav-form" onclick="showPage('form')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+      <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+    </svg>
+    <span>입력</span>
+  </button>
+  <button class="nav-btn" id="nav-admin" onclick="showPage('admin')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <rect x="3" y="3" width="7" height="7" rx="1"/>
+      <rect x="14" y="3" width="7" height="7" rx="1"/>
+      <rect x="3" y="14" width="7" height="7" rx="1"/>
+      <rect x="14" y="14" width="7" height="7" rx="1"/>
+    </svg>
+    <span>관리</span>
+  </button>
+</nav>
+
+<!-- ───────── MODAL ───────── -->
+<div class="overlay" id="dupOverlay">
+  <div class="modal">
+    <h2>⚠️ 기존 입력 내용이 있습니다</h2>
+    <p id="dupMsg"></p>
+    <div id="dupInfo" class="dup-info"></div>
+    <div class="btn-row">
+      <button class="btn btn-outline" onclick="closeDupModal()">취소</button>
+      <button class="btn btn-accent" id="dupEditBtn" onclick="editExisting()">수정하기</button>
+      <button class="btn btn-primary" id="dupNewBtn" onclick="submitAnyway()">그래도 등록</button>
+    </div>
+  </div>
+</div>
+
+<!-- ───────── EDIT MODAL ───────── -->
+<div class="overlay" id="editOverlay">
+  <div class="modal">
+    <h2>✏️ 기존 내용 수정</h2>
+    <p style="font-size:.8rem;color:var(--muted);margin-bottom:14px">내용을 수정한 후 저장 버튼을 누르세요.</p>
+    <div class="field">
+      <label>대상자 이름</label>
+      <input type="text" id="edit-targetName">
+    </div>
+    <div class="field">
+      <label>나이</label>
+      <input type="text" id="edit-age" placeholder="예: 40세">
+    </div>
+    <div class="field">
+      <label>연락처</label>
+      <input type="text" id="edit-contact">
+    </div>
+    <div class="field">
+      <label>복음제시일</label>
+      <input type="text" id="edit-date">
+    </div>
+    <div class="field">
+      <label>관계</label>
+      <input type="text" id="edit-relation">
+    </div>
+    <div class="field">
+      <label>종교</label>
+      <input type="text" id="edit-religion">
+    </div>
+    <div class="field">
+      <label>배경</label>
+      <textarea id="edit-background" rows="3"></textarea>
+    </div>
+    <div class="field">
+      <label>기도제목 1</label>
+      <input type="text" id="edit-prayer1">
+    </div>
+    <div class="field">
+      <label>기도제목 2</label>
+      <input type="text" id="edit-prayer2">
+    </div>
+    <div class="field">
+      <label>기도제목 3</label>
+      <input type="text" id="edit-prayer3">
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-outline" onclick="closeEditModal()">취소</button>
+      <button class="btn btn-primary" onclick="saveEdit()">저장하기</button>
+    </div>
+  </div>
+</div>
+
+<!-- ───────── TOAST ───────── -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Globals ──
+let allData = [];
+let pendingSubmit = null;
+let editingRow = null;
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded', () => {
+  if (SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+    document.getElementById('config-warn').style.display = 'flex';
+  }
+  setupContactFormat();
+  setupDayCalc();
+});
+
+// ── Page nav ──
+function showPage(p) {
+  document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('page-' + p).classList.add('active');
+  document.getElementById('nav-' + p).classList.add('active');
+  if (p === 'admin') loadAdmin();
+}
+
+// ── Contact format ──
+function setupContactFormat() {
+  const inp = document.getElementById('contact');
+  inp.addEventListener('input', () => {
+    inp.value = inp.value.replace(/\D/g, '').slice(0, 8);
+  });
+}
+function formatContact(raw) {
+  const d = raw.replace(/\D/g,'');
+  if (!d) return '';
+  if (d.length <= 4) return '010-' + d;
+  return '010-' + d.slice(0,4) + '-' + d.slice(4,8);
+}
+
+// ── Day calculation ──
+function setupDayCalc() {
+  document.getElementById('dateDay').addEventListener('input', updateDayBadge);
+}
+function updateDayBadge() {
+  const day = parseInt(document.getElementById('dateDay').value);
+  const badge = document.getElementById('dayBadge');
+  if (!day || day < 1 || day > 30) { badge.classList.remove('show'); return; }
+  const d = new Date(YEAR, MONTH - 1, day);
+  if (d.getMonth() !== MONTH - 1) { badge.classList.remove('show'); return; }
+  badge.textContent = DAYS_KO[d.getDay()] + '요일';
+  badge.classList.add('show');
+}
+function getDateString() {
+  const day = parseInt(document.getElementById('dateDay').value);
+  if (!day) return '';
+  const d = new Date(YEAR, MONTH - 1, day);
+  const dow = DAYS_KO[d.getDay()];
+  return `6월 ${day}일(${dow})`;
+}
+
+// ── Collect form data ──
+function collectForm() {
+  const ageNum = document.getElementById('ageNum').value;
+  const ageUnit = document.querySelector('input[name=ageUnit]:checked').value;
+  const age = ageNum ? `${ageNum}${ageUnit}` : '';
+  const contact = formatContact(document.getElementById('contact').value);
+  return {
+    trainer: document.getElementById('trainer').value.trim(),
+    targetName: document.getElementById('targetName').value.trim(),
+    age,
+    contact,
+    date: getDateString(),
+    relation: document.getElementById('relation').value.trim(),
+    religion: document.getElementById('religion').value.trim(),
+    background: document.getElementById('background').value.trim(),
+    prayer1: document.getElementById('prayer1').value.trim(),
+    prayer2: document.getElementById('prayer2').value.trim(),
+    prayer3: document.getElementById('prayer3').value.trim(),
+  };
+}
+
+// ── Validate ──
+function validate(data) {
+  if (!data.trainer) { showToast('훈련자 이름을 입력하세요'); return false; }
+  if (!data.targetName) { showToast('대상자 이름을 입력하세요'); return false; }
+  if (!data.date) { showToast('복음제시일을 입력하세요'); return false; }
+  return true;
+}
+
+// ── Submit flow ──
+async function handleSubmit() {
+  const data = collectForm();
+  if (!validate(data)) return;
+  if (SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+    showToast('⚠️ SCRIPT_URL을 먼저 설정해주세요'); return;
+  }
+
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'check', ...data })
+    });
+    const json = await res.json();
+    if (json.duplicates && json.duplicates.length > 0) {
+      pendingSubmit = data;
+      showDupModal(json.duplicates, data);
+    } else {
+      await doSubmit(data);
+    }
+  } catch(e) {
+    showToast('오류가 발생했습니다. 다시 시도해주세요');
+    console.error(e);
+  }
+}
+
+async function doSubmit(data) {
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify({ action: 'submit', ...data })
+    });
+    const json = await res.json();
+    if (json.success) {
+      showToast('✓ 기도제목이 등록되었습니다');
+      resetForm();
+    } else {
+      showToast('저장 실패. 다시 시도해주세요');
+    }
+  } catch(e) {
+    showToast('오류가 발생했습니다');
+    console.error(e);
+  }
+}
+
+function resetForm() {
+  ['trainer','targetName','ageNum','contact','dateDay','relation','religion','background','prayer1','prayer2','prayer3']
+    .forEach(id => document.getElementById(id).value = '');
+  document.getElementById('unitSe').checked = true;
+  document.getElementById('dayBadge').classList.remove('show');
+}
+
+// ── Dup modal ──
+function showDupModal(dups, newData) {
+  let msg = '아래 기존 입력 내용이 확인되었습니다.';
+  let info = '';
+  dups.forEach(d => {
+    const r = d.data;
+    const reason = d.type === 'name'
+      ? `훈련자·대상자 이름 중복 (${r[0]} / ${r[1]})`
+      : `훈련자·복음제시일 중복 (${r[0]} / ${r[3]})`;
+    info += `<b>${reason}</b><br>` +
+      `대상자: ${r[1]}  ${r[2] ? '(' + r[2] + ')' : ''}<br>` +
+      `복음제시일: ${r[3]}<br>관계: ${r[4]}<br><br>`;
+  });
+  document.getElementById('dupMsg').textContent = msg;
+  document.getElementById('dupInfo').innerHTML = info.trim();
+  // store for edit
+  editingRow = dups[0];
+  document.getElementById('dupOverlay').classList.add('show');
+}
+function closeDupModal() {
+  document.getElementById('dupOverlay').classList.remove('show');
+  pendingSubmit = null;
+}
+function submitAnyway() {
+  closeDupModal();
+  doSubmit(pendingSubmit);
+}
+function editExisting() {
+  closeDupModal();
+  openEditModal(editingRow.data, editingRow.row);
+}
+
+// ── Edit modal ──
+function openEditModal(row, rowNum) {
+  document.getElementById('edit-targetName').value = row[1] || '';
+  document.getElementById('edit-age').value = row[2] || '';
+  document.getElementById('edit-contact').value = row[10] || '';
+  document.getElementById('edit-date').value = row[3] || '';
+  document.getElementById('edit-relation').value = row[4] || '';
+  document.getElementById('edit-religion').value = row[5] || '';
+  document.getElementById('edit-background').value = row[6] || '';
+  document.getElementById('edit-prayer1').value = row[7] || '';
+  document.getElementById('edit-prayer2').value = row[8] || '';
+  document.getElementById('edit-prayer3').value = row[9] || '';
+  editingRow = { row, rowNum, rowId: row[12] };
+  document.getElementById('editOverlay').classList.add('show');
+}
+function closeEditModal() {
+  document.getElementById('editOverlay').classList.remove('show');
+  editingRow = null;
+}
+async function saveEdit() {
+  if (!editingRow) return;
+  const r = editingRow.row;
+  const updated = {
+    action: 'update',
+    rowId: editingRow.rowId,
+    trainer: r[0],
+    targetName: document.getElementById('edit-targetName').value.trim(),
+    age: document.getElementById('edit-age').value.trim(),
+    contact: document.getElementById('edit-contact').value.trim(),
+    date: document.getElementById('edit-date').value.trim(),
+    relation: document.getElementById('edit-relation').value.trim(),
+    religion: document.getElementById('edit-religion').value.trim(),
+    background: document.getElementById('edit-background').value.trim(),
+    prayer1: document.getElementById('edit-prayer1').value.trim(),
+    prayer2: document.getElementById('edit-prayer2').value.trim(),
+    prayer3: document.getElementById('edit-prayer3').value.trim(),
+  };
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(updated)
+    });
+    const json = await res.json();
+    if (json.success) {
+      showToast('✓ 수정되었습니다');
+      closeEditModal();
+      if (document.getElementById('page-admin').classList.contains('active')) loadAdmin();
+    } else {
+      showToast('수정 실패');
+    }
+  } catch(e) {
+    showToast('오류 발생');
+  }
+}
+
+// ── Admin load ──
+async function loadAdmin() {
+  document.getElementById('admin-content').innerHTML = '<div class="loading">불러오는 중...</div>';
+  if (SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+    document.getElementById('admin-content').innerHTML = '<div class="empty-state">⚠️ SCRIPT_URL을 설정해주세요</div>';
+    return;
+  }
+  try {
+    const res = await fetch(SCRIPT_URL + '?action=getAll');
+    const json = await res.json();
+    allData = json.data || [];
+    buildDateFilter();
+    renderAdmin(allData);
+  } catch(e) {
+    document.getElementById('admin-content').innerHTML = '<div class="empty-state">데이터를 불러오지 못했습니다</div>';
+  }
+}
+function buildDateFilter() {
+  const dates = [...new Set(allData.map(d => d.date).filter(Boolean))].sort();
+  const sel = document.getElementById('dateFilter');
+  sel.innerHTML = '<option value="">전체 보기</option>';
+  dates.forEach(d => {
+    const opt = document.createElement('option');
+    opt.value = d; opt.textContent = d;
+    sel.appendChild(opt);
+  });
+}
+function filterAdmin() {
+  const v = document.getElementById('dateFilter').value;
+  renderAdmin(v ? allData.filter(d => d.date === v) : allData);
+}
+function renderAdmin(data) {
+  if (!data.length) {
+    document.getElementById('admin-content').innerHTML = '<div class="empty-state">입력된 기도제목이 없습니다</div>';
+    return;
+  }
+  // group by date
+  const groups = {};
+  data.forEach(d => {
+    const k = d.date || '날짜 미정';
+    if (!groups[k]) groups[k] = [];
+    groups[k].push(d);
+  });
+  let html = '';
+  Object.keys(groups).sort().forEach(date => {
+    html += `<div style="padding:14px 14px 4px;font-size:.75rem;font-weight:700;letter-spacing:.1em;color:var(--primary)">${date}</div>`;
+    groups[date].forEach(d => {
+      const prayers = [d.prayer1, d.prayer2, d.prayer3].filter(Boolean);
+      html += `<div class="prayer-card">
+        <div class="trainer-line">□ 훈련자 : ${d.trainer || ''}</div>
+        <div class="pc-row">
+          <b>*대상자 :</b> ${d.targetName || ''}<br>
+          <span style="padding-left:1em;color:var(--muted);font-size:.82rem">(${d.age || ''}${d.contact ? ', ' + d.contact : ''})</span>
+        </div>
+        <div class="pc-row"><b>*복음제시일 :</b> ${d.date || ''}</div>
+        <div class="pc-row"><b>*관계 :</b> ${d.relation || ''}</div>
+        <div class="pc-row"><b>*종교 :</b> ${d.religion || ''}</div>
+        ${d.background ? `<div class="pc-row" style="margin-top:6px"><b>* 전하게 된 배경 :</b></div><div class="pc-bg">${d.background}</div>` : ''}
+        ${prayers.length ? `<div class="pc-row" style="margin-top:6px"><b>* 현장을 위한 기도제목</b></div>
+        <div class="pc-prayers">${prayers.map((p,i) => `<div class="pc-pi"><div class="pn">${i+1}</div><div>${p}</div></div>`).join('')}</div>` : ''}
+        <div style="margin-top:12px;text-align:right">
+          <button class="btn btn-outline btn-sm" onclick='openEditModalFromAdmin(${JSON.stringify(d)})'>수정</button>
+        </div>
+      </div>`;
+    });
+  });
+  document.getElementById('admin-content').innerHTML = html;
+}
+function openEditModalFromAdmin(d) {
+  const fakeRow = [d.trainer, d.targetName, d.age, d.date, d.relation, d.religion,
+                   d.background, d.prayer1, d.prayer2, d.prayer3, d.contact, '', d.rowId];
+  openEditModal(fakeRow, null);
+}
+
+// ── Toast ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+</script>
+</body>
+</html>
