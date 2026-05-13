@@ -8,266 +8,119 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --primary: #1a3a5c;
-  --accent:  #c8860a;
-  --light:   #f5f0e8;
-  --white:   #ffffff;
-  --border:  #d4c9b0;
-  --text:    #2c2c2c;
-  --muted:   #7a7060;
-  --shadow:  0 2px 16px rgba(26,58,92,0.10);
+:root{
+  --p:#1a3a5c; --a:#c8860a; --l:#f5f0e8;
+  --w:#fff; --b:#d4c9b0; --t:#2c2c2c; --m:#7a7060;
+  --sh:0 2px 16px rgba(26,58,92,.10);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{
-  font-family:'Noto Sans KR',sans-serif;
-  background:#eae4d8;
-  min-height:100vh;
-  padding:0 0 68px;
-}
+body{font-family:'Noto Sans KR',sans-serif;background:#eae4d8;min-height:100vh;padding:0 0 68px;}
 .page{display:none;} .page.active{display:block;}
 
-/* ── Header ── */
-.hdr{
-  background:var(--primary);color:#fff;
-  padding:20px 18px 18px;
-  text-align:center;
-  position:sticky;top:0;z-index:90;
-  box-shadow:0 2px 10px rgba(0,0,0,.25);
-}
+.hdr{background:var(--p);color:#fff;padding:20px 18px 18px;text-align:center;position:sticky;top:0;z-index:90;box-shadow:0 2px 10px rgba(0,0,0,.25);}
 .hdr-sub{font-size:.7rem;opacity:.75;letter-spacing:.06em;}
-.hdr-title{
-  font-family:'Noto Serif KR',serif;
-  font-size:1.18rem;font-weight:600;
-  margin-top:3px;letter-spacing:.02em;
-}
-.hdr-verse{
-  margin-top:16px;padding-top:14px;
-  border-top:1px solid rgba(255,255,255,.3);
-  font-family:'Noto Serif KR',serif;
-  font-size:.71rem;line-height:1.95;
-  opacity:.85;text-align:left;
-}
-.hdr-verse-ref{
-  display:block;text-align:right;
-  font-family:'Noto Sans KR',sans-serif;
-  font-size:.66rem;opacity:.7;margin-top:3px;
-}
+.hdr-title{font-family:'Noto Serif KR',serif;font-size:1.18rem;font-weight:600;margin-top:3px;letter-spacing:.02em;}
+.hdr-verse{margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.3);font-family:'Noto Serif KR',serif;font-size:.71rem;line-height:1.95;opacity:.85;text-align:left;}
+.hdr-ref{display:block;text-align:right;font-family:'Noto Sans KR',sans-serif;font-size:.66rem;opacity:.7;margin-top:3px;}
 
-/* ── Card ── */
-.card{
-  background:#fff;margin:16px 14px 0;
-  border-radius:12px;box-shadow:var(--shadow);
-  padding:18px 16px;
-}
-.card-title{
-  font-size:.68rem;font-weight:700;
-  letter-spacing:.12em;text-transform:uppercase;
-  color:var(--accent);
-  padding-bottom:8px;margin-bottom:14px;
-  border-bottom:1.5px solid var(--border);
-}
+.card{background:#fff;margin:16px 14px 0;border-radius:12px;box-shadow:var(--sh);padding:18px 16px;}
+.card-ttl{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--a);padding-bottom:8px;margin-bottom:14px;border-bottom:1.5px solid var(--b);}
 
-/* ── Field ── */
-.field{margin-bottom:14px;}
-.field:last-child{margin-bottom:0;}
-.lbl{display:block;font-size:.76rem;font-weight:600;color:var(--primary);margin-bottom:5px;}
-.req{color:var(--accent);margin-left:2px;}
-.inp{
-  width:100%;
-  border:1.5px solid var(--border);border-radius:8px;
-  padding:10px 12px;
-  font-family:'Noto Sans KR',sans-serif;font-size:.9rem;
-  color:var(--text);background:var(--light);
-  outline:none;appearance:none;
-  transition:border-color .18s,box-shadow .18s;
-}
-.inp:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(26,58,92,.09);background:#fff;}
+.field{margin-bottom:14px;} .field:last-child{margin-bottom:0;}
+.lbl{display:block;font-size:.76rem;font-weight:600;color:var(--p);margin-bottom:5px;}
+.req{color:var(--a);margin-left:2px;}
+.inp{width:100%;border:1.5px solid var(--b);border-radius:8px;padding:10px 12px;font-family:'Noto Sans KR',sans-serif;font-size:.9rem;color:var(--t);background:var(--l);outline:none;appearance:none;transition:border-color .18s,box-shadow .18s;}
+.inp:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(26,58,92,.09);background:#fff;}
 textarea.inp{resize:vertical;line-height:1.65;}
-.hint{font-size:.66rem;color:var(--muted);margin-top:3px;}
+.hint{font-size:.66rem;color:var(--m);margin-top:3px;}
 
-/* ── Age row ── */
 .age-row{display:flex;gap:8px;align-items:center;}
 .age-row .inp{width:78px;flex-shrink:0;}
-.seg{display:flex;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;}
+.seg{display:flex;border:1.5px solid var(--b);border-radius:8px;overflow:hidden;}
 .seg input[type=radio]{display:none;}
-.seg label{
-  margin:0;padding:10px 15px;
-  font-size:.85rem;font-weight:500;color:var(--muted);
-  background:var(--light);cursor:pointer;
-  transition:background .15s,color .15s;user-select:none;
-}
-.seg input[type=radio]:checked+label{background:var(--primary);color:#fff;}
-.seg-div{width:1px;background:var(--border);}
+.seg label{margin:0;padding:10px 15px;font-size:.85rem;font-weight:500;color:var(--m);background:var(--l);cursor:pointer;transition:background .15s,color .15s;user-select:none;}
+.seg input[type=radio]:checked+label{background:var(--p);color:#fff;}
+.seg-div{width:1px;background:var(--b);}
 
-/* ── Date row ── */
 .date-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
-.date-lbl{font-size:.9rem;font-weight:600;color:var(--primary);white-space:nowrap;}
+.date-lbl{font-size:.9rem;font-weight:600;color:var(--p);white-space:nowrap;}
 .date-row .inp{width:68px;}
-.day-badge{
-  background:var(--primary);color:#fff;
-  font-size:.73rem;font-weight:600;
-  padding:3px 10px;border-radius:20px;display:none;
-}
+.day-badge{background:var(--p);color:#fff;font-size:.73rem;font-weight:600;padding:3px 10px;border-radius:20px;display:none;}
 .day-badge.on{display:inline-block;}
 
-/* ── Prayer items ── */
 .prayer-list{display:flex;flex-direction:column;gap:8px;}
 .prayer-row{display:flex;align-items:center;gap:8px;}
-.pnum{
-  width:22px;height:22px;border-radius:50%;
-  background:var(--primary);color:#fff;
-  font-size:.7rem;font-weight:700;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
+.pnum{width:22px;height:22px;border-radius:50%;background:var(--p);color:#fff;font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .prayer-row .inp{flex:1;}
 
-/* ── Buttons ── */
-.btn{
-  width:100%;padding:13px;border:none;border-radius:10px;
-  font-family:'Noto Sans KR',sans-serif;font-size:.95rem;font-weight:700;
-  cursor:pointer;transition:opacity .2s,transform .1s;letter-spacing:.03em;
-}
+.btn{width:100%;padding:13px;border:none;border-radius:10px;font-family:'Noto Sans KR',sans-serif;font-size:.95rem;font-weight:700;cursor:pointer;transition:opacity .2s,transform .1s;letter-spacing:.03em;}
 .btn:active{transform:scale(.98);}
-.btn-primary{background:var(--primary);color:#fff;}
-.btn-accent{background:var(--accent);color:#fff;}
-.btn-outline{background:transparent;border:2px solid var(--primary);color:var(--primary);}
+.btn-primary{background:var(--p);color:#fff;}
+.btn-accent{background:var(--a);color:#fff;}
+.btn-outline{background:transparent;border:2px solid var(--p);color:var(--p);}
 .btn-sm{padding:8px 16px;font-size:.82rem;width:auto;}
 .btn-row{display:flex;gap:10px;margin-top:8px;}
 .btn-row .btn{flex:1;}
 
-/* ── Modal ── */
-.overlay{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.5);z-index:200;
-  align-items:flex-end;
-}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;}
 .overlay.on{display:flex;}
-.modal{
-  background:#fff;width:100%;
-  border-radius:18px 18px 0 0;
-  padding:26px 18px 38px;
-  animation:slideUp .22s ease;
-  max-height:88vh;overflow-y:auto;
-  margin-top:auto;
-}
+.modal{background:#fff;width:100%;border-radius:18px 18px 0 0;padding:26px 18px 38px;animation:slideUp .22s ease;max-height:88vh;overflow-y:auto;margin-top:auto;}
 @keyframes slideUp{from{transform:translateY(50px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal h2{font-family:'Noto Serif KR',serif;font-size:1rem;color:var(--primary);margin-bottom:8px;}
-.modal .sub{font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:14px;}
-.dup-box{
-  background:var(--light);border-left:3px solid var(--accent);
-  border-radius:6px;padding:10px 13px;
-  font-size:.79rem;color:var(--text);line-height:1.85;margin-bottom:14px;
-}
+.modal h2{font-family:'Noto Serif KR',serif;font-size:1rem;color:var(--p);margin-bottom:8px;}
+.modal .sub{font-size:.8rem;color:var(--m);line-height:1.6;margin-bottom:14px;}
+.dup-box{background:var(--l);border-left:3px solid var(--a);border-radius:6px;padding:10px 13px;font-size:.79rem;color:var(--t);line-height:1.85;margin-bottom:14px;}
 
-/* ── Spinner ── */
-.spin-wrap{
-  display:none;position:fixed;inset:0;
-  background:rgba(0,0,0,.38);z-index:400;
-  align-items:center;justify-content:center;
-}
+.spin-wrap{display:none;position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:400;align-items:center;justify-content:center;}
 .spin-wrap.on{display:flex;}
-.spinner{
-  width:42px;height:42px;
-  border:4px solid rgba(255,255,255,.3);
-  border-top-color:#fff;border-radius:50%;
-  animation:spin .65s linear infinite;
-}
+.spinner{width:42px;height:42px;border:4px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .65s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── Toast ── */
-.toast{
-  position:fixed;bottom:76px;left:50%;
-  transform:translateX(-50%) translateY(16px);
-  background:var(--primary);color:#fff;
-  padding:9px 22px;border-radius:28px;
-  font-size:.81rem;font-weight:500;
-  opacity:0;transition:opacity .28s,transform .28s;
-  z-index:999;white-space:nowrap;pointer-events:none;
-}
+.toast{position:fixed;bottom:76px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--p);color:#fff;padding:9px 22px;border-radius:28px;font-size:.81rem;font-weight:500;opacity:0;transition:opacity .28s,transform .28s;z-index:999;white-space:nowrap;pointer-events:none;}
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0);}
 
-/* ── Nav ── */
-.nav{
-  position:fixed;bottom:0;left:0;right:0;
-  background:#fff;border-top:1px solid var(--border);
-  display:flex;z-index:100;
-  box-shadow:0 -2px 8px rgba(0,0,0,.07);
-}
-.nav-btn{
-  flex:1;padding:9px 4px 7px;background:none;border:none;
-  font-family:'Noto Sans KR',sans-serif;font-size:.68rem;color:var(--muted);
-  cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;
-  transition:color .18s;
-}
-.nav-btn.active{color:var(--primary);}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--b);display:flex;z-index:100;box-shadow:0 -2px 8px rgba(0,0,0,.07);}
+.nav-btn{flex:1;padding:9px 4px 7px;background:none;border:none;font-family:'Noto Sans KR',sans-serif;font-size:.68rem;color:var(--m);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:color .18s;}
+.nav-btn.active{color:var(--p);}
 .nav-btn svg{width:21px;height:21px;}
 .nav-btn span{font-weight:500;}
 
-/* ── List bar ── */
-.list-bar{
-  padding:12px 14px 4px;
-  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
-}
-.list-bar label{font-size:.78rem;font-weight:600;color:var(--primary);}
-.list-bar select{
-  border:1.5px solid var(--border);border-radius:8px;
-  padding:6px 10px;
-  font-family:'Noto Sans KR',sans-serif;font-size:.83rem;
-  background:#fff;color:var(--text);outline:none;
-}
+.list-bar{padding:12px 14px 4px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.list-bar label{font-size:.78rem;font-weight:600;color:var(--p);}
+.list-bar select{border:1.5px solid var(--b);border-radius:8px;padding:6px 10px;font-family:'Noto Sans KR',sans-serif;font-size:.83rem;background:#fff;color:var(--t);outline:none;}
 
-/* ── Share bar ── */
-.share-bar{
-  background:#fff;margin:14px 14px 0;
-  border-radius:10px;padding:11px 13px;
-  display:flex;align-items:center;gap:10px;
-  box-shadow:var(--shadow);
-}
-.share-bar input{
-  flex:1;border:1.5px solid var(--border);border-radius:6px;
-  padding:7px 10px;font-size:.73rem;color:var(--muted);
-  background:var(--light);outline:none;
-}
+.share-bar{background:#fff;margin:14px 14px 0;border-radius:10px;padding:11px 13px;display:flex;align-items:center;gap:10px;box-shadow:var(--sh);}
+.share-bar input{flex:1;border:1.5px solid var(--b);border-radius:6px;padding:7px 10px;font-size:.73rem;color:var(--m);background:var(--l);outline:none;}
 
-/* ── Prayer card ── */
-.p-card{
-  background:#fff;margin:10px 14px 0;
-  border-radius:12px;box-shadow:var(--shadow);
-  padding:16px 15px;
-}
-.p-trainer{font-size:.76rem;font-weight:700;color:var(--primary);margin-bottom:7px;}
-.p-row{font-size:.84rem;color:var(--text);line-height:1.9;}
-.p-row b{color:var(--primary);font-weight:600;}
-.p-sub{padding-left:.9em;color:var(--muted);font-size:.8rem;}
-.p-bg{
-  background:var(--light);border-radius:6px;
-  padding:8px 11px;font-size:.81rem;line-height:1.7;
-  margin:5px 0 3px;white-space:pre-wrap;
-}
+.p-card{background:#fff;margin:10px 14px 0;border-radius:12px;box-shadow:var(--sh);padding:16px 15px;}
+.p-trainer{font-size:.76rem;font-weight:700;color:var(--p);margin-bottom:7px;}
+.p-row{font-size:.84rem;color:var(--t);line-height:1.9;}
+.p-row b{color:var(--p);font-weight:600;}
+.p-sub{padding-left:.9em;color:var(--m);font-size:.8rem;}
+.p-bg{background:var(--l);border-radius:6px;padding:8px 11px;font-size:.81rem;line-height:1.7;margin:5px 0 3px;white-space:pre-wrap;}
 .p-prayers{margin-top:5px;}
 .p-pi{display:flex;gap:7px;align-items:flex-start;font-size:.81rem;line-height:1.6;margin-bottom:2px;}
-.p-pi .pn{
-  width:17px;height:17px;border-radius:50%;
-  background:var(--accent);color:#fff;
-  font-size:.66rem;font-weight:700;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;margin-top:2px;
-}
-.date-head{padding:13px 14px 3px;font-size:.73rem;font-weight:700;letter-spacing:.09em;color:var(--primary);}
-.empty{text-align:center;padding:46px 20px;color:var(--muted);font-size:.83rem;}
-.loading{text-align:center;padding:38px;color:var(--muted);font-size:.83rem;}
+.p-pi .pn{width:17px;height:17px;border-radius:50%;background:var(--a);color:#fff;font-size:.66rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.date-head{padding:13px 14px 3px;font-size:.73rem;font-weight:700;letter-spacing:.09em;color:var(--p);}
+.empty{text-align:center;padding:46px 20px;color:var(--m);font-size:.83rem;}
+.loading{text-align:center;padding:38px;color:var(--m);font-size:.83rem;}
 
 ::-webkit-scrollbar{width:4px;}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+::-webkit-scrollbar-thumb{background:var(--b);border-radius:2px;}
 </style>
 </head>
 <body>
 
 <script>
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbz4vf15qFT65dvvMllWmc1H9fRbC9GtLd8mAlwILbdWZQHf3I0ce8Vn4eGaPijeWWZ6Cg/exec';
-const YEAR=2026, MONTH=6;
-const DOW=['일','월','화','수','목','금','토'];
+// ── 설정 ──────────────────────────────────────────────
+// Apps Script URL (쓰기 전용 — no-cors)
+var GAS_URL = 'https://script.google.com/macros/s/AKfycbz4vf15qFT65dvvMllWmc1H9fRbC9GtLd8mAlwILbdWZQHf3I0ce8Vn4eGaPijeWWZ6Cg/exec';
+
+// Google Sheets 공개 CSV URL (읽기 전용)
+// 시트가 "링크가 있는 사용자 모두 뷰어" 이상으로 공유되어 있어야 합니다
+var SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1-4LfkjCtBWyD0RDr-2lme9ty4xk87GnfijGbaHxQKqY/gviz/tq?tqx=out:csv&sheet=%EB%8C%80%EC%83%81%EC%9E%90%EA%B8%B0%EB%8F%84%EC%A0%9C%EB%AA%A9';
+
+var YEAR=2026, MONTH=6;
+var DOW=['일','월','화','수','목','금','토'];
 </script>
 
 <!-- PAGE: FORM -->
@@ -279,12 +132,12 @@ const DOW=['일','월','화','수','목','금','토'];
       주여 이제도 그들의 위협함을 굽어보시옵고 또 종들로 하여금 담대히 하나님의 말씀을 전하게 하여 주시오며<br>
       손을 내밀어 병을 낫게 하시옵고 표적과 기사가 거룩한 종 예수의 이름으로 이루어지게 하옵소서 하더라<br>
       빌기를 다하매 모인 곳이 진동하더니 무리가 다 성령이 충만하여 담대히 하나님의 말씀을 전하니라
-      <span class="hdr-verse-ref">— 행 4:29–31</span>
+      <span class="hdr-ref">— 행 4:29–31</span>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title">훈련자 정보</div>
+    <div class="card-ttl">훈련자 정보</div>
     <div class="field">
       <label class="lbl">훈련자 이름 <span class="req">*</span></label>
       <input class="inp" type="text" id="f-trainer" placeholder="이름 입력">
@@ -292,7 +145,7 @@ const DOW=['일','월','화','수','목','금','토'];
   </div>
 
   <div class="card">
-    <div class="card-title">대상자 정보</div>
+    <div class="card-ttl">대상자 정보</div>
     <div class="field">
       <label class="lbl">대상자 이름 <span class="req">*</span></label>
       <input class="inp" type="text" id="f-target" placeholder="이름 입력">
@@ -333,14 +186,14 @@ const DOW=['일','월','화','수','목','금','토'];
   </div>
 
   <div class="card">
-    <div class="card-title">복음을 전하게 된 배경</div>
+    <div class="card-ttl">복음을 전하게 된 배경</div>
     <div class="field">
       <textarea class="inp" id="f-bg" rows="4" placeholder="배경을 자유롭게 입력해주세요"></textarea>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title">현장을 위한 기도제목</div>
+    <div class="card-ttl">현장을 위한 기도제목</div>
     <div class="prayer-list">
       <div class="prayer-row"><div class="pnum">1</div><input class="inp" type="text" id="f-p1" placeholder="기도제목 1"></div>
       <div class="prayer-row"><div class="pnum">2</div><input class="inp" type="text" id="f-p2" placeholder="기도제목 2"></div>
@@ -366,7 +219,7 @@ const DOW=['일','월','화','수','목','금','토'];
   <div class="list-bar">
     <label>날짜</label>
     <select id="v-filter" onchange="filterViewer()"><option value="">전체</option></select>
-    <button class="btn btn-outline btn-sm" onclick="loadViewer()" style="margin-left:auto">새로고침</button>
+    <button class="btn btn-outline btn-sm" onclick="loadData()" style="margin-left:auto">새로고침</button>
   </div>
   <div id="v-content"><div class="loading">불러오는 중…</div></div>
 </div>
@@ -380,7 +233,7 @@ const DOW=['일','월','화','수','목','금','토'];
   <div class="list-bar">
     <label>날짜</label>
     <select id="a-filter" onchange="filterAdmin()"><option value="">전체</option></select>
-    <button class="btn btn-outline btn-sm" onclick="loadAdmin()" style="margin-left:auto">새로고침</button>
+    <button class="btn btn-outline btn-sm" onclick="loadData()" style="margin-left:auto">새로고침</button>
   </div>
   <div id="a-content"><div class="loading">불러오는 중…</div></div>
 </div>
@@ -449,29 +302,94 @@ const DOW=['일','월','화','수','목','금','토'];
 
 <script>
 // ════════════════════════════════════════
-// JSONP — 모든 CORS 문제를 우회하는 유일한 방법
+// CSV 파서 — Google Sheets gviz CSV 파싱
 // ════════════════════════════════════════
-let _idx = 0;
-function gasCall(params) {
-  return new Promise((resolve, reject) => {
-    const cb = '__gcb' + (++_idx);
-    const tid = setTimeout(() => { cleanup(); reject(new Error('timeout')); }, 15000);
-    function cleanup() {
-      try { delete window[cb]; } catch(e) {}
-      const el = document.getElementById('__gs'+_idx);
-      if (el) el.parentNode.removeChild(el);
-      clearTimeout(tid);
+function parseCSV(text) {
+  var rows = [];
+  var lines = text.split('\n');
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i].trim();
+    if (!line) continue;
+    var row = [];
+    var cur = '', inQ = false;
+    for (var j = 0; j < line.length; j++) {
+      var c = line[j];
+      if (c === '"') {
+        if (inQ && line[j+1] === '"') { cur += '"'; j++; }
+        else inQ = !inQ;
+      } else if (c === ',' && !inQ) {
+        row.push(cur); cur = '';
+      } else {
+        cur += c;
+      }
     }
-    window[cb] = function(data) { cleanup(); resolve(data); };
-    const qs = Object.entries(Object.assign({}, params, {callback: cb}))
-      .map(([k,v]) => encodeURIComponent(k)+'='+encodeURIComponent(String(v)))
-      .join('&');
-    const s = document.createElement('script');
-    s.id = '__gs' + _idx;
-    s.src = GAS_URL + '?' + qs;
-    s.onerror = function() { cleanup(); reject(new Error('network error')); };
-    document.head.appendChild(s);
-  });
+    row.push(cur);
+    rows.push(row);
+  }
+  return rows;
+}
+
+function csvToObjects(rows) {
+  // 헤더: 훈련자,대상자이름,나이,복음제시일,관계,종교,배경,기도1,기도2,기도3,연락처,타임스탬프,rowId
+  var data = [];
+  for (var i = 1; i < rows.length; i++) {
+    var r = rows[i];
+    if (!r[0]) continue;
+    data.push({
+      trainer:    r[0],  targetName: r[1],  age:     r[2],
+      date:       r[3],  relation:   r[4],  religion:r[5],
+      background: r[6],  prayer1:    r[7],  prayer2: r[8],
+      prayer3:    r[9],  contact:    r[10], rowId:   r[12]
+    });
+  }
+  return data;
+}
+
+// ════════════════════════════════════════
+// 데이터 로드 (CSV)
+// ════════════════════════════════════════
+var allData = [], pending = null, editing = null;
+
+function loadData() {
+  // 캐시 bust
+  var url = SHEET_CSV_URL + '&t=' + Date.now();
+  setContent('v-content', '<div class="loading">불러오는 중…</div>');
+  setContent('a-content', '<div class="loading">불러오는 중…</div>');
+
+  fetch(url)
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.text();
+    })
+    .then(function(text) {
+      var rows = parseCSV(text);
+      allData  = csvToObjects(rows);
+      buildFilter('v-filter', allData);
+      buildFilter('a-filter', allData);
+      renderCards(allData, 'v-content', false);
+      renderCards(allData, 'a-content', true);
+    })
+    .catch(function(e) {
+      console.error(e);
+      var msg = '<div class="empty">데이터를 불러오지 못했습니다.<br>스프레드시트 공유 설정을 확인하거나 새로고침 해주세요.</div>';
+      setContent('v-content', msg);
+      setContent('a-content', msg);
+    });
+}
+
+function setContent(id, html) {
+  document.getElementById(id).innerHTML = html;
+}
+
+// ════════════════════════════════════════
+// Apps Script 호출 (쓰기 — no-cors)
+// 응답은 읽지 않음. 성공/실패는 일정 시간 후 CSV 재로드로 확인.
+// ════════════════════════════════════════
+function gasWrite(params) {
+  var qs = Object.keys(params).map(function(k) {
+    return encodeURIComponent(k) + '=' + encodeURIComponent(params[k] || '');
+  }).join('&');
+  return fetch(GAS_URL + '?' + qs, { method: 'GET', mode: 'no-cors' });
 }
 
 // ════════════════════════════════════════
@@ -479,24 +397,18 @@ function gasCall(params) {
 // ════════════════════════════════════════
 function spin(on) { document.getElementById('spinner').classList.toggle('on', on); }
 function toast(msg) {
-  const t = document.getElementById('toast');
+  var t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('on');
-  clearTimeout(t._t); t._t = setTimeout(()=>t.classList.remove('on'), 2800);
+  clearTimeout(t._t); t._t = setTimeout(function(){t.classList.remove('on');}, 2800);
 }
 function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-// ════════════════════════════════════════
-// 상태
-// ════════════════════════════════════════
-let allData=[], viewData=[], pending=null, editing=null;
 
 // ════════════════════════════════════════
 // 초기화
 // ════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', function() {
   // 연락처 자동 포맷
-  var ci = document.getElementById('f-contact');
-  ci.addEventListener('input', function() {
+  document.getElementById('f-contact').addEventListener('input', function() {
     var d = this.value.replace(/\D/g,'').slice(0,11);
     this.value = d.length<=3 ? d : d.length<=7
       ? d.slice(0,3)+'-'+d.slice(3)
@@ -505,9 +417,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // 요일 뱃지
   document.getElementById('f-day').addEventListener('input', function() {
     var n=parseInt(this.value), b=document.getElementById('dayBadge');
-    if (!n||n<1||n>30) { b.classList.remove('on'); return; }
+    if (!n||n<1||n>30){b.classList.remove('on');return;}
     var d=new Date(YEAR,MONTH-1,n);
-    if (d.getMonth()!==MONTH-1) { b.classList.remove('on'); return; }
+    if (d.getMonth()!==MONTH-1){b.classList.remove('on');return;}
     b.textContent=DOW[d.getDay()]+'요일'; b.classList.add('on');
   });
   // 공유 URL
@@ -526,8 +438,7 @@ function showPage(p) {
   document.getElementById('page-'+p).classList.add('active');
   document.getElementById('nav-'+p).classList.add('active');
   if (history.replaceState) history.replaceState(null,'','#'+p);
-  if (p==='viewer') loadViewer();
-  if (p==='admin')  loadAdmin();
+  if (p==='viewer'||p==='admin') loadData();
 }
 
 // ════════════════════════════════════════
@@ -566,31 +477,48 @@ function resetForm() {
 }
 
 // ════════════════════════════════════════
+// 중복 체크 (로컬 — CSV 데이터 기준)
+// ════════════════════════════════════════
+function checkDup(d) {
+  return allData.filter(function(r) {
+    return (r.trainer===d.trainer && r.targetName===d.targetName) ||
+           (r.trainer===d.trainer && r.date===d.date);
+  }).map(function(r) {
+    var type = (r.trainer===d.trainer && r.targetName===d.targetName) ? 'name' : 'date';
+    return { type:type, item:r };
+  });
+}
+
+// ════════════════════════════════════════
 // 제출 흐름
 // ════════════════════════════════════════
 function handleSubmit() {
-  var d=collectForm();
+  var d = collectForm();
   if (!d.trainer)    { toast('훈련자 이름을 입력하세요'); return; }
   if (!d.targetName) { toast('대상자 이름을 입력하세요'); return; }
   if (!d.date)       { toast('복음제시일을 입력하세요'); return; }
-  spin(true);
-  gasCall(Object.assign({action:'check'}, d))
-    .then(function(r) {
-      spin(false);
-      if (r.duplicates && r.duplicates.length>0) { pending=d; showDupModal(r.duplicates); }
-      else doSubmit(d);
-    })
-    .catch(function(e) { spin(false); console.error(e); toast('오류가 발생했습니다. 잠시 후 다시 시도해주세요.'); });
+
+  var dups = checkDup(d);
+  if (dups.length > 0) { pending=d; showDupModal(dups); return; }
+  doSubmit(d);
 }
+
 function doSubmit(d) {
   spin(true);
-  gasCall(Object.assign({action:'submit'}, d))
-    .then(function(r) {
-      spin(false);
-      if (r.success) { toast('✓ 기도제목이 등록되었습니다'); resetForm(); }
-      else toast('저장에 실패했습니다. 다시 시도해주세요.');
+  gasWrite(Object.assign({action:'submit'}, d))
+    .then(function() {
+      // no-cors라 응답 확인 불가 → 2초 후 성공으로 간주
+      setTimeout(function() {
+        spin(false);
+        toast('✓ 기도제목이 등록되었습니다');
+        resetForm();
+      }, 2000);
     })
-    .catch(function(e) { spin(false); console.error(e); toast('오류가 발생했습니다.'); });
+    .catch(function(e) {
+      console.error(e);
+      spin(false);
+      toast('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+    });
 }
 
 // ════════════════════════════════════════
@@ -599,69 +527,69 @@ function doSubmit(d) {
 function showDupModal(dups) {
   var info='';
   dups.forEach(function(d) {
-    var r=d.data||[];
+    var r=d.item;
     var reason=d.type==='name'
-      ? '훈련자·대상자 이름 중복 ('+esc(r[0])+' / '+esc(r[1])+')'
-      : '훈련자·복음제시일 중복 ('+esc(r[0])+' / '+esc(r[3])+')';
-    info+='<b>'+reason+'</b><br>대상자: '+esc(r[1])+(r[2]?' ('+esc(r[2])+')':'')+'<br>'
-         +'복음제시일: '+esc(r[3])+'<br>관계: '+esc(r[4])+'<br><br>';
+      ? '훈련자·대상자 이름 중복 ('+esc(r.trainer)+' / '+esc(r.targetName)+')'
+      : '훈련자·복음제시일 중복 ('+esc(r.trainer)+' / '+esc(r.date)+')';
+    info+='<b>'+reason+'</b><br>대상자: '+esc(r.targetName)+(r.age?' ('+esc(r.age)+')':'')
+         +'<br>복음제시일: '+esc(r.date)+'<br>관계: '+esc(r.relation)+'<br><br>';
   });
   document.getElementById('dup-msg').textContent='아래 기존 입력 내용이 확인되었습니다.';
   document.getElementById('dup-box').innerHTML=info.trim();
-  editing=dups[0];
+  editing=dups[0].item;
   document.getElementById('ov-dup').classList.add('on');
 }
 function closeDup() { document.getElementById('ov-dup').classList.remove('on'); pending=null; }
 function submitAnyway() { closeDup(); doSubmit(pending); }
-function editExisting()  { closeDup(); openEdit(editing.data, editing.rowId); }
+function editExisting()  { closeDup(); openEdit(editing); }
 
 // ════════════════════════════════════════
 // 수정 모달
 // ════════════════════════════════════════
-function openEdit(row, rowId) {
-  document.getElementById('e-target').value  = row[1]  ||'';
-  document.getElementById('e-age').value     = row[2]  ||'';
-  document.getElementById('e-contact').value = row[10] ||'';
-  document.getElementById('e-date').value    = row[3]  ||'';
-  document.getElementById('e-rel').value     = row[4]  ||'';
-  document.getElementById('e-religion').value= row[5]  ||'';
-  document.getElementById('e-bg').value      = row[6]  ||'';
-  document.getElementById('e-p1').value      = row[7]  ||'';
-  document.getElementById('e-p2').value      = row[8]  ||'';
-  document.getElementById('e-p3').value      = row[9]  ||'';
-  editing={row:row, rowId: rowId||row[12]};
+function openEdit(r) {
+  document.getElementById('e-target').value   = r.targetName || '';
+  document.getElementById('e-age').value      = r.age        || '';
+  document.getElementById('e-contact').value  = r.contact    || '';
+  document.getElementById('e-date').value     = r.date       || '';
+  document.getElementById('e-rel').value      = r.relation   || '';
+  document.getElementById('e-religion').value = r.religion   || '';
+  document.getElementById('e-bg').value       = r.background || '';
+  document.getElementById('e-p1').value       = r.prayer1    || '';
+  document.getElementById('e-p2').value       = r.prayer2    || '';
+  document.getElementById('e-p3').value       = r.prayer3    || '';
+  editing = r;
   document.getElementById('ov-edit').classList.add('on');
 }
 function closeEdit() { document.getElementById('ov-edit').classList.remove('on'); editing=null; }
+
 function saveEdit() {
   if (!editing) return;
-  var r=editing.row;
-  var params={
-    action:'update', rowId:editing.rowId,
-    trainer:r[0],
-    targetName:document.getElementById('e-target').value.trim(),
-    age:       document.getElementById('e-age').value.trim(),
-    contact:   document.getElementById('e-contact').value.trim(),
-    date:      document.getElementById('e-date').value.trim(),
-    relation:  document.getElementById('e-rel').value.trim(),
-    religion:  document.getElementById('e-religion').value.trim(),
-    background:document.getElementById('e-bg').value.trim(),
-    prayer1:   document.getElementById('e-p1').value.trim(),
-    prayer2:   document.getElementById('e-p2').value.trim(),
-    prayer3:   document.getElementById('e-p3').value.trim()
+  var params = {
+    action:'update', rowId: editing.rowId,
+    targetName: document.getElementById('e-target').value.trim(),
+    age:        document.getElementById('e-age').value.trim(),
+    contact:    document.getElementById('e-contact').value.trim(),
+    date:       document.getElementById('e-date').value.trim(),
+    relation:   document.getElementById('e-rel').value.trim(),
+    religion:   document.getElementById('e-religion').value.trim(),
+    background: document.getElementById('e-bg').value.trim(),
+    prayer1:    document.getElementById('e-p1').value.trim(),
+    prayer2:    document.getElementById('e-p2').value.trim(),
+    prayer3:    document.getElementById('e-p3').value.trim()
   };
   spin(true);
-  gasCall(params)
-    .then(function(res) {
-      spin(false);
-      if (res.success) {
-        toast('✓ 수정되었습니다'); closeEdit();
-        var active=document.querySelector('.page.active').id;
-        if (active==='page-admin')  loadAdmin();
-        if (active==='page-viewer') loadViewer();
-      } else toast('수정 실패. 다시 시도해주세요.');
+  gasWrite(params)
+    .then(function() {
+      setTimeout(function() {
+        spin(false);
+        toast('✓ 수정되었습니다');
+        closeEdit();
+        loadData();
+      }, 2000);
     })
-    .catch(function(e){ spin(false); console.error(e); toast('오류가 발생했습니다.'); });
+    .catch(function(e) {
+      console.error(e); spin(false); toast('오류가 발생했습니다.');
+    });
 }
 
 // ════════════════════════════════════════
@@ -669,16 +597,16 @@ function saveEdit() {
 // ════════════════════════════════════════
 function renderCards(data, cid, editable) {
   var box=document.getElementById(cid);
-  if (!data.length) { box.innerHTML='<div class="empty">입력된 기도제목이 없습니다</div>'; return; }
+  if (!data.length){box.innerHTML='<div class="empty">입력된 기도제목이 없습니다</div>';return;}
   var groups={};
-  data.forEach(function(d) { var k=d.date||'날짜 미정'; if(!groups[k]) groups[k]=[]; groups[k].push(d); });
+  data.forEach(function(d){var k=d.date||'날짜 미정';if(!groups[k])groups[k]=[];groups[k].push(d);});
   var html='';
-  Object.keys(groups).sort().forEach(function(date) {
+  Object.keys(groups).sort().forEach(function(date){
     html+='<div class="date-head">📅 '+esc(date)+'</div>';
-    groups[date].forEach(function(d) {
+    groups[date].forEach(function(d){
       var prayers=[d.prayer1,d.prayer2,d.prayer3].filter(Boolean);
       var editBtn=editable
-        ? '<div style="margin-top:11px;text-align:right"><button class="btn btn-outline btn-sm" onclick=\'openEditFromCard('+JSON.stringify(d)+')\'>수정</button></div>'
+        ? '<div style="margin-top:11px;text-align:right"><button class="btn btn-outline btn-sm" onclick=\'openEdit('+JSON.stringify(d)+')\'>수정</button></div>'
         : '';
       html+='<div class="p-card">'
         +'<div class="p-trainer">□ 훈련자 : '+esc(d.trainer)+'</div>'
@@ -697,10 +625,6 @@ function renderCards(data, cid, editable) {
   });
   box.innerHTML=html;
 }
-function openEditFromCard(d) {
-  openEdit([d.trainer,d.targetName,d.age,d.date,d.relation,d.religion,
-            d.background,d.prayer1,d.prayer2,d.prayer3,d.contact,'',d.rowId], d.rowId);
-}
 
 // ════════════════════════════════════════
 // 날짜 필터
@@ -709,43 +633,20 @@ function buildFilter(selId, data) {
   var dates=[...new Set(data.map(function(d){return d.date;}).filter(Boolean))].sort();
   var sel=document.getElementById(selId);
   sel.innerHTML='<option value="">전체</option>';
-  dates.forEach(function(d){ var o=document.createElement('option'); o.value=o.textContent=d; sel.appendChild(o); });
+  dates.forEach(function(d){var o=document.createElement('option');o.value=o.textContent=d;sel.appendChild(o);});
 }
-
-// ════════════════════════════════════════
-// 조회 페이지
-// ════════════════════════════════════════
-function loadViewer() {
-  document.getElementById('v-content').innerHTML='<div class="loading">불러오는 중…</div>';
-  gasCall({action:'getAll'})
-    .then(function(r){ viewData=r.data||[]; buildFilter('v-filter',viewData); renderCards(viewData,'v-content',false); })
-    .catch(function(e){ console.error(e); document.getElementById('v-content').innerHTML='<div class="empty">데이터를 불러오지 못했습니다.<br>새로고침 해주세요.</div>'; });
-}
-function filterViewer() {
+function filterViewer(){
   var v=document.getElementById('v-filter').value;
-  renderCards(v?viewData.filter(function(d){return d.date===v;}):viewData,'v-content',false);
+  renderCards(v?allData.filter(function(d){return d.date===v;}):allData,'v-content',false);
 }
-function copyUrl() {
-  var url=location.href.split('#')[0]+'#viewer';
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(url).then(function(){toast('링크가 복사되었습니다');});
-  } else {
-    document.getElementById('shareUrl').select(); toast('주소를 수동으로 복사하세요');
-  }
-}
-
-// ════════════════════════════════════════
-// 관리자 페이지
-// ════════════════════════════════════════
-function loadAdmin() {
-  document.getElementById('a-content').innerHTML='<div class="loading">불러오는 중…</div>';
-  gasCall({action:'getAll'})
-    .then(function(r){ allData=r.data||[]; buildFilter('a-filter',allData); renderCards(allData,'a-content',true); })
-    .catch(function(e){ console.error(e); document.getElementById('a-content').innerHTML='<div class="empty">데이터를 불러오지 못했습니다.<br>새로고침 해주세요.</div>'; });
-}
-function filterAdmin() {
+function filterAdmin(){
   var v=document.getElementById('a-filter').value;
   renderCards(v?allData.filter(function(d){return d.date===v;}):allData,'a-content',true);
+}
+function copyUrl(){
+  var url=location.href.split('#')[0]+'#viewer';
+  if(navigator.clipboard){navigator.clipboard.writeText(url).then(function(){toast('링크가 복사되었습니다');});}
+  else{document.getElementById('shareUrl').select();toast('주소를 수동으로 복사하세요');}
 }
 </script>
 </body>
